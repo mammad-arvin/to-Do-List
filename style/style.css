@@ -1,0 +1,96 @@
+*{
+    box-sizing: border-box;
+}
+::-webkit-scrollbar-thumb{
+    width: 5px;
+    color:#c74508
+}
+::-webkit-scrollbar{
+    width: 8px;
+}
+body{
+    font-family: beauty;
+    color: #fff;
+    /* background-color: #242424; */
+    background: url(../image/cool-background.png) center/cover no-repeat fixed;
+    height: 100vh;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    position: sticky;  
+    top: 20px;
+}
+.title p{
+    font:800 55px/58px beauty;
+    margin-top: 30px;
+}
+.inputContainer{
+    display: flex;
+    text-align: center;
+    gap: 20px;
+    position: relative;
+}
+#todoInput{
+    font: 32px/40px arial;
+    width: 480px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    position: relative;
+    outline: none;
+}
+.pluseSVG{
+    position: absolute;
+    inset:3px 0 0 435px ;
+    background-color: #fff;
+    padding: 1.2px 5px 5px 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 7px;
+}
+.fa-square-plus{
+    color: rgb(22, 117, 74);
+    font-size: 40px;
+}
+#todoFiler{
+    font:800 15px/10px beauty;
+    text-align: center;
+    color: #c74508;
+    border-radius: 7px;
+    margin-top: 6px;
+    height: 35px;
+    outline: none;
+}
+
+.lists{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list p{
+    font: 500 30px/35px beauty,arial;
+    color:#242424;
+    background: #fff;
+    padding: 5px 25px;
+    border-radius: 7px;
+}
+.iconStyle{
+    font-size: 38px;
+    background: #fff;
+    padding: 4px 8px;
+    margin-left:-5px;
+}
+.fa-square-check{
+    color: rgb(76, 137, 60);
+}
+.fa-trash-can{
+    color: rgb(238, 65, 53);
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
