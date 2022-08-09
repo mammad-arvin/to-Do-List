@@ -2,29 +2,34 @@
     box-sizing: border-box;
 }
 ::-webkit-scrollbar-thumb{
-    width: 5px;
+    width: 2.5px;
     color:#c74508
 }
 ::-webkit-scrollbar{
-    width: 8px;
+    width: 2.5px;
 }
 body{
     font-family: beauty;
     color: #fff;
-    /* background-color: #242424; */
     background: url(../image/cool-background.png) center/cover no-repeat fixed;
-    height: 100vh;
+    backdrop-filter: brightness(70%);
+    min-height: 100vh;
+    margin: 0;
 }
 .container{
     display: flex;
     flex-direction: column;
     align-items: center;  
-    position: sticky;  
-    top: 20px;
+    position: sticky;
+    top: -130px;
+    z-index: 15;
+    backdrop-filter: blur(4px);
+    box-shadow:0 5px 15px #adacac4e;
 }
 .title p{
     font:800 55px/58px beauty;
     margin-top: 30px;
+    text-shadow: 1px 3px 8px rgba(0, 0, 0, 0.934);
 }
 .inputContainer{
     display: flex;
@@ -39,19 +44,18 @@ body{
     margin-bottom: 20px;
     position: relative;
     outline: none;
+    box-shadow:0 15px 15px #0000004e;
 }
 .pluseSVG{
     position: absolute;
-    inset:3px 0 0 435px ;
+    inset:3.4px 0 0 435px ;
     background-color: #fff;
     padding: 1.2px 5px 5px 5px;
     width: 40px;
     height: 40px;
     border-radius: 7px;
-}
-.fa-square-plus{
     color: rgb(22, 117, 74);
-    font-size: 40px;
+    font-size: 35px;
 }
 #todoFiler{
     font:800 15px/10px beauty;
@@ -61,6 +65,7 @@ body{
     margin-top: 6px;
     height: 35px;
     outline: none;
+    box-shadow:0 15px 15px #0000004e;
 }
 
 .lists{
@@ -68,17 +73,22 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.list{
+.listShow{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 65px;
+    transition:.3s;
 }
-.list p{
-    font: 500 30px/35px beauty,arial;
+.listShowPara{
+    font: 500 20px/36px beauty,arial;
     color:#242424;
     background: #fff;
     padding: 5px 25px;
     border-radius: 7px;
+    min-width: 350px;
+    transition: .3s;
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.324);
 }
 .iconStyle{
     font-size: 38px;
@@ -89,8 +99,29 @@ body{
 .fa-square-check{
     color: rgb(76, 137, 60);
 }
+:is(.fa-square-check , .fa-trash-can , .fa-square-plus){
+    transition:.3s;
+    z-index: 4;
+}
+:is(.fa-square-check , .fa-square-plus):hover{
+   transform: translate(-3px)
+}
+.fa-trash-can:hover{
+    cursor: pointer;
+    animation: shake ease .3s infinite;
+    border-radius: 5px;
+}
+@keyframes shake {
+    to{
+        transform: scale(1.04);
+    }
+}
 .fa-trash-can{
     color: rgb(238, 65, 53);
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
+}
+.checked{
+    filter: brightness(80%);
+    text-decoration: line-through;
 }
