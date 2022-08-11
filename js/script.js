@@ -5,7 +5,7 @@ const submit=inputContainer.lastElementChild;
                     // every time load 
 document.addEventListener('DOMContentLoaded',getSavedTodo);
 function getSavedTodo(){
-    validation();
+    allWorkValidation();
     allWork.forEach(todo => {
         const lists=document.querySelector('.lists');
         const listShow=document.createElement('div')
@@ -22,8 +22,24 @@ function getSavedTodo(){
         lists.appendChild(listShow);
         listShow.firstChild.innerText=todo;
     });
+    completedValidation()
+    completed.forEach(todo =>{
+        const lists=document.querySelector('.lists');
+        const listShow=document.createElement('div')
+        listShow.className='listShow';
+        const listShowP=document.createElement('p');
+        listShowP.className='listShowPara checked';
+        const listShowICheck=document.createElement('i');
+        listShowICheck.className='checkBox fa-solid fa-square-check iconStyle';
+        const listShowITrash=document.createElement('i');
+        listShowITrash.className='deleteBox fa-solid fa-trash-can iconStyle';
+        listShow.appendChild(listShowP);
+        listShow.appendChild(listShowICheck);
+        listShow.appendChild(listShowITrash);
+        lists.appendChild(listShow);
+        listShow.firstChild.innerText=todo;
+    })
 }
-
                     // add listShow
 function addingListShow(){
     const lists=document.querySelector('.lists');
@@ -44,7 +60,7 @@ function addingListShow(){
 }
                     // add todo to array & localStorage and listShow
 let allWork;
-function validation(){
+function allWorkValidation(){
         if(localStorage.getItem('allWork') === null){
             allWork = [];
         }
@@ -52,10 +68,20 @@ function validation(){
             allWork=JSON.parse(localStorage.getItem("allWork"));
         }
 }
-
+function inputValidation(text){
+    const inputText=text.split("");
+    let result=false;
+    for(let i of inputText){
+        if(i !== " "){
+            result=true;
+        }
+    }
+    return result;
+}
 function submitToLocal(){
-    if(input.value){
-        validation();
+    const validate=inputValidation(input.value)
+    if(input.value && validate){
+        allWorkValidation();
         allWork.push(input.value);
         localStorage.setItem('allWork',JSON.stringify(allWork))
         addingListShow();
@@ -80,6 +106,7 @@ function completedAndUncompleted(event){
     if(item.classList[0]=== 'checkBox'){
         const previousEl=item.previousElementSibling;
         previousEl.classList.toggle('checked');
+        completedWorksHandel(previousEl);
     }
     else if(item.classList[0] ==='deleteBox'){
         removeFromLocal(item.parentElement);
@@ -88,10 +115,17 @@ function completedAndUncompleted(event){
 }
 
 function removeFromLocal(item){
-    validation();
+    allWorkValidation();
     const todoText=item.firstElementChild.innerText;
-    allWork.splice(allWork.indexOf(todoText),1);
-    localStorage.setItem('allWork',JSON.stringify(allWork));
+    if(allWork.indexOf(todoText)>=0){
+        allWork.splice(allWork.indexOf(todoText),1);
+        localStorage.setItem('allWork',JSON.stringify(allWork));
+    }
+    else{
+        completedValidation();
+        completed.splice(completed.indexOf(todoText),1);
+        localStorage.setItem('completed',JSON.stringify(completed));
+    }
 }
 
                                 // filter todos
@@ -127,4 +161,34 @@ function filterTodos(event){
                 break;
         }
     }
+}
+
+                    // show completed when document reload
+
+let completed;
+function completedValidation(){
+    if(localStorage.getItem('completed') === null){
+        completed = [];
+    }
+    else{
+        completed=JSON.parse(localStorage.getItem("completed"));
+    }
+}
+                // remove From Allwork and submit to completed or reverse
+function completedWorksHandel(todoPara){
+    completedValidation();
+    todoText=todoPara.innerText;
+    if(todoPara.classList.contains('checked')){
+        completed.push(todoText);
+        localStorage.setItem('completed',JSON.stringify(completed));
+        allWork.splice(allWork.indexOf(todoText),1);
+        localStorage.setItem('allWork',JSON.stringify(allWork));
+        console.log(todoText);
+    }else{
+        allWork.push(todoText);
+        localStorage.setItem('allWork',JSON.stringify(allWork));
+        completed.splice(completed.indexOf(todoText),1);
+        localStorage.setItem('completed',JSON.stringify(completed));
+    }
+
 }
